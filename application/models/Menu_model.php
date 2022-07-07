@@ -46,7 +46,12 @@ class Menu_model extends CI_Model
     {
         $data = [
             "nip" => $this->input->post('nip', true),
-            "nama" => $this->input->post('nama', true)
+            "nama" => $this->input->post('nama', true),
+            "satker" => $this->input->post('satker', true),
+            "instansi" => $this->input->post('instansi', true),
+            "kepentingan" => $this->input->post('kepentingan', true),
+            "layanan" => $this->input->post('layanan', true),
+            "counter" => $this->input->post('counter', true),
         ];
 
         $this->db->where('id', $this->input->post('id'));

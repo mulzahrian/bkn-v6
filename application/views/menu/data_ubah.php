@@ -39,7 +39,9 @@
                             <label for="counter">Counter</label>
                             <input type="text" name="counter" class="form-control" id="counter" value="<?= $data['counter']; ?>">
                         </div>
-                        <a href="<?= base_url(); ?>menu/data" class="btn btn-success btn-sm float-center">Simpan</a>
+                        <button type="submit" name="ubah" class="btn btn-primary float-right">Ubah Data</button>
+                        <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
+                        <!-- <a href="<?= base_url(); ?>menu/data" class="btn btn-success btn-sm float-center">Simpan</a> -->
 
 
                     </form>

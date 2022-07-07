@@ -156,6 +156,11 @@ class Menu extends CI_Controller
 
         $this->form_validation->set_rules('nip', 'nip', 'required');
         $this->form_validation->set_rules('nama', 'nama', 'required');
+        $this->form_validation->set_rules('satker', 'satker', 'required');
+        $this->form_validation->set_rules('instansi', 'instansi', 'required');
+        $this->form_validation->set_rules('kepentingan', 'kepentingan', 'required');
+        $this->form_validation->set_rules('layanan', 'layanan', 'required');
+        $this->form_validation->set_rules('counter', 'counter', 'required');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
