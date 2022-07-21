@@ -202,58 +202,62 @@ class Menu extends CI_Controller
     {
         $data['data'] = $this->Menu_model->tampil_data('layanan')->result();
 
-	    
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+        require(APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
+        require(APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 
 
         $object = new PHPExcel();
 
-       // create style
-    $default_border = array(
-        'style' => PHPExcel_Style_Border::BORDER_THIN,
-        'color' => array('rgb'=>'000000')
-    );
-    $style_header = array(
-        'borders' => array(
-            'bottom' => $default_border,
-            'left' => $default_border,
-            'top' => $default_border,
-            'right' => $default_border,
-            'center' => $default_border,
-            'justify' => $default_border,
-            'centerContinuous' => $default_border,
-            'general' => $default_border,
+        // create style
+        $default_border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000')
+                ),
+            ),
+        );
+        $style_header = array(
+            'borders' => array(
+                'bottom' => $default_border,
+                'left' => $default_border,
+                'top' => $default_border,
+                'right' => $default_border,
+                'center' => $default_border,
+                'justify' => $default_border,
+                'centerContinuous' => $default_border,
+                'general' => $default_border,
 
-        ),
-        'fill' => array(
-            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-            'color' => array('rgb'=>'E1E0F7'),
-        ),
-        'font' => array(
-            'bold' => false,
-    'size' => 14,
-        )
-    );
-    $style_content = array(
-        'borders' => array(
-            'bottom' => $default_border,
-            'left' => $default_border,
-            'top' => $default_border,
-            'right' => $default_border,
-            'center' => $default_border,
-            'justify' => $default_border,
-            'centerContinuous' => $default_border,
-            'general' => $default_border,
-        ),
-        'fill' => array(
-            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-            'color' => array('rgb'=>'eeeeee'),
-        ),
-        'font' => array(
-    'size' => 12,
-        )
-    );
+            ),
+            'fill' => array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array('rgb' => 'E1E0F7'),
+            ),
+            'font' => array(
+                'bold' => false,
+                'size' => 14,
+            )
+        );
+        $style_content = array(
+            'borders' => array(
+                'bottom' => $default_border,
+                'left' => $default_border,
+                'top' => $default_border,
+                'right' => $default_border,
+                'center' => $default_border,
+                'justify' => $default_border,
+                'centerContinuous' => $default_border,
+                'general' => $default_border,
+            ),
+            'fill' => array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array('rgb' => 'eeeeee'),
+            ),
+            'font' => array(
+                'size' => 12,
+            )
+        );
 
         $object->getProperties()->setCreator("Zahra");
         $object->getProperties()->setLastModifiedBy("Zahra");
@@ -261,48 +265,55 @@ class Menu extends CI_Controller
 
         $object->setActiveSheetIndex(0);
 
-        $object->getActiveSheet()->setCellValue('A1','NO');
-        $object->getActiveSheet()->setCellValue('B1','Nip');
-        $object->getActiveSheet()->setCellValue('C1','Nama');
-        $object->getActiveSheet()->setCellValue('D1','Slug');
-        $object->getActiveSheet()->setCellValue('E1','Satker');
-        $object->getActiveSheet()->setCellValue('F1','Instansi');
-        $object->getActiveSheet()->setCellValue('G1','Kepentingan');
-        $object->getActiveSheet()->setCellValue('H1','No Hp');
-        $object->getActiveSheet()->setCellValue('I1','Layanan');
-        $object->getActiveSheet()->setCellValue('J1','Counter');
-        $object->getActiveSheet()->getStyle('A1:J1')->applyFromArray( $style_header ); // give style to header
+        $object->getActiveSheet()->setCellValue('A1', 'No');
+        $object->getActiveSheet()->setCellValue('B1', 'NIP');
+        $object->getActiveSheet()->setCellValue('C1', 'Nama');
+        $object->getActiveSheet()->setCellValue('D1', 'Instansi');
+        $object->getActiveSheet()->setCellValue('E1', 'Layanan');
+        $object->getActiveSheet()->setCellValue('F1', 'Kepentingan');
+        $object->getActiveSheet()->setCellValue('G1', 'Satker');
+        $object->getActiveSheet()->setCellValue('H1', 'No Hp');
+        $object->getActiveSheet()->getStyle('A1:H1')->applyFromArray($style_header); // give style to header
 
         $baris = 2;
         $no = 1;
-        $firststyle='A2';
-        $laststyle = 'J2';
+        $firststyle = 'A2';
+        $laststyle = 'H2';
         foreach ($data['data'] as $mds) {
-            $object->getActiveSheet()->setCellValue('A'.$baris, $no++);
-            $object->getActiveSheet()->setCellValue('B'.$baris, $mds->nip);
-            $object->getActiveSheet()->setCellValue('C'.$baris, $mds->nama);
-            $object->getActiveSheet()->setCellValue('D'.$baris, $mds->slug);
-            $object->getActiveSheet()->setCellValue('E'.$baris, $mds->satker);
-            $object->getActiveSheet()->setCellValue('F'.$baris, $mds->instansi);
-            $object->getActiveSheet()->setCellValue('G'.$baris, $mds->kepentingan);
-            $object->getActiveSheet()->setCellValue('H'.$baris, $mds->nohp);
-            $object->getActiveSheet()->setCellValue('I'.$baris, $mds->layanan);
-            $object->getActiveSheet()->setCellValue('J'.$baris, $mds->counter);
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $mds->nip);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $mds->nama);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $mds->instansi);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $mds->layanan);
+            $object->getActiveSheet()->setCellValue('F' . $baris, $mds->kepentingan);
+            $object->getActiveSheet()->setCellValue('G' . $baris, $mds->satker);
+            $object->getActiveSheet()->setCellValue('H' . $baris, $mds->nohp);
             $baris++;
-            $laststyle='J'.$baris;
-            
+            $laststyle = 'H' . $baris;
         }
-        
-        $object->getActiveSheet()->getStyle($firststyle.':'.$laststyle)->applyFromArray( $style_content ); // give style to header
-    $filename="Data".'.xlsx';
-    $object->getActiveSheet()->setTitle("Data");
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="'.$filename.'"');
-    header('Cache-Control: max-age=0');
+        $object->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
+        $object->getActiveSheet()->getStyle('A1:I1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-    $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
-    $writer->save('php://output');
-    exit;
+        $object->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("C")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("D")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("E")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("G")->setAutoSize(true);
+        $object->getActiveSheet()->getColumnDimension("H")->setAutoSize(true);
+
+
+        $object->getActiveSheet()->getStyle($firststyle . ':' . $laststyle)->applyFromArray($style_content); // give style to header
+        $filename = "Data" . '.xlsx';
+        $object->getActiveSheet()->setTitle("Data");
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+        $writer->save('php://output');
+        exit;
     }
 
     //pdf
@@ -378,7 +389,7 @@ class Menu extends CI_Controller
             $upload_image = $_FILES['video']['name'];
 
             if ($upload_image) {
-                $config['allowed_types'] = 'mp4';
+                $config['allowed_types'] = 'png|jpg';
                 $config['max_size']      = '100000';
                 $config['upload_path'] = './assets/img/profile/';
 
